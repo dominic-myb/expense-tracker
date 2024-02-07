@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Expense</title>
-</head>
+<?php
+$pageTitle = "Expense";
+$style = "record.style.css";
+include("app/includes/html/record.head.php");
+?>
+
 <body>
-    
+
+    <?php include("app/includes/html/record.foot.php"); ?>
 </body>
+
 </html>
