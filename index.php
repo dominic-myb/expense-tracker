@@ -1,5 +1,4 @@
 <?php include("app/includes/components/connection.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,6 @@ include("app/includes/html/html.head.php");
         <?php
         $sql = "SELECT * FROM income_tbl";
         $result = $conn->query($sql);
-        $balance = 0;
         $balanceQuery = "SELECT SUM(income) as sum_income FROM income_tbl";
         $balance = $conn->query($balanceQuery);
         $balaceData = $balance->fetch_assoc();
@@ -27,7 +25,6 @@ include("app/includes/html/html.head.php");
         <table class="table table-hover table-borderless align-middle">
             <thead>
                 <tr class="table-primary">
-                    <th scope="col">No.</th>
                     <th scope="col">Income</th>
                     <th scope="col">Date</th>
                     <th scope="col">Description</th>
@@ -40,13 +37,12 @@ include("app/includes/html/html.head.php");
                     while ($row = mysqli_fetch_assoc($result)) {
                 ?>
                         <tr>
-                            <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['income']; ?></td>
                             <td><?php echo $row['date']; ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary">Update</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
+                                <a href="delete.php?updateid=<?php echo $row['id'] ?>" class="btn btn-primary update-btn">Update</a>
+                                <a href="delete.php?deleteid=<?php echo $row['id'] ?>" class="btn btn-danger delete-btn">Delete</a>
                             </td>
                         </tr>
                     <?php
@@ -54,7 +50,7 @@ include("app/includes/html/html.head.php");
                 } else {
                     ?>
                     <tr>
-                        <td colspan="5" style="text-align:center;">No Records</td>
+                        <td colspan="4" style="text-align:center;">No Records</td>
                     </tr>
                 <?php
                 }
@@ -70,14 +66,14 @@ include("app/includes/html/html.head.php");
                     <h5 class="modal-title" id="income-label">Add Income</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="income.php" method="post">
+                <form action="income.php" method="post" id="income-form">
                     <div class="modal-body">
-                        <input class="form-control" name="amount" type="text" placeholder="Amount" aria-label="default input example"><br>
-                        <textarea class="form-control" name="desc" id="text-area" placeholder="Description" rows="3"></textarea>
+                        <input class="form-control" name="amount" id="income-amount" type="text" placeholder="Amount" aria-label="default input example"><br>
+                        <textarea class="form-control" name="desc" id="income-desc" placeholder="Description" rows="3"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="income-btn" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -99,13 +95,13 @@ include("app/includes/html/html.head.php");
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="expense-btn" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- End of Expense Modal -->
-
+    <?php include("app/includes/html/html.foot.php") ?>
 </body>
 
 </html>
