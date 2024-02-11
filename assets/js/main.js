@@ -1,16 +1,15 @@
 $(document).ready(function(){
-    $('#income-form').submit(function(e) {
-        if(!validateInput('income')) {
+    $('#record-form').submit(function(e) {
+        if(!validateInput('record')) {
             e.preventDefault();
         }
     });
 
-    $('#expense-form').submit(function(e) {
-        if(!validateInput('expense')) {
-            e.preventDefault();
-        }
+    $('.update-btn').click(function() {
+        // Submit the form with the ID 'update-form'
+        $('#update-form').submit();
     });
-
+    
     $('.delete-btn').on("click", function(e){
         value = confirm("Are you sure?");
         if(value <= 0){
