@@ -2,7 +2,7 @@
 include("app/includes/components/connection.php");
 $id = $_GET['deleteid'];
 if(isset($_GET['deleteid'])){
-    $stmt = $conn->prepare('DELETE FROM income_tbl WHERE id = ?');
+    $stmt = $conn->prepare('DELETE FROM records WHERE id = ?');
     $stmt->bind_param('i', $id);
     $stmt->execute();
     $stmt->close();
