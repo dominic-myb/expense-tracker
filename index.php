@@ -49,7 +49,9 @@ include("app/includes/html/html.head.php");
 
         ?>
         <div class="top-header">
-            <h3>Balance: <?php echo number_format($balance, 2); ?></h3>
+            <h3>Balance:
+                <?php echo number_format($balance, 2); ?>
+            </h3>
             <input class="btn btn-success" type="button" name="add-record" id="add-record" value="Add Record" data-bs-toggle="modal" data-bs-target="#record-modal">
         </div>
         <table class="table table-hover table-borderless align-middle">
@@ -69,16 +71,26 @@ include("app/includes/html/html.head.php");
                         if ($row['type'] === "Income")
                 ?>
                         <tr>
-                            <td style="background-color: <?php echo $row['type'] === "Income" ? '#AFE1AF' : '#E97451' ?>;"><?php echo $row['type']; ?></td>
-                            <td><?php echo $row['amount']; ?></td>
-                            <td><?php echo $row['date']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td style="background-color: <?php echo $row['type'] === "Income" ? '#AFE1AF' : '#E97451' ?>;">
+                                <?php echo $row['type']; ?>
+                            </td>
                             <td>
-                                <form action="" method="post" id="update-form">
-                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                    <button type="button" name="update-btn" class="btn btn-primary update-btn" data-bs-toggle="modal" data-bs-target=".record-modal">Update</button>
-                                    <a href="delete.php?deleteid=<?php echo $row['id'] ?>" class="btn btn-danger delete-btn">Delete</a>
-                                </form>
+                                <?php echo $row['amount']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['date']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['description']; ?>
+                            </td>
+                            <td>
+                                <button type="button" id="update-btn" name="update-btn" class="btn btn-primary update-btn" 
+                                data-id="<?php echo $row['id']; ?>"
+                                data-type="<?php echo $row['type']; ?>" 
+                                data-amount="<?php echo $row['amount']; ?>" 
+                                data-desc="<?php echo $row['description']; ?>" 
+                                data-bs-toggle="modal" data-bs-target=".update-modal">Update</button>
+                                <a href="delete.php?deleteid=<?php echo $row['id'] ?>" class="btn btn-danger delete-btn">Delete</a>
                             </td>
                         </tr>
                     <?php
@@ -122,38 +134,29 @@ include("app/includes/html/html.head.php");
         </div>
     </div>
     <!-- End of Record Modal -->
-     <!-- Update Section Modal -->
-     <div class="modal fade record-modal" id="record-modal" tabindex="-1" role="dialog" aria-labelledby="record-label" aria-hidden="true">
+
+    <!-- Update Section Modal -->
+    <div class="modal fade update-modal" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="update-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="record-label">Update Record</h5>
+                    <h5 class="modal-title" id="update-label">Update Record</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="post" id="update-form">
-                    <?php 
-                    if(isset($_POST['update-btn'])){
-                        $id = $_POST['id'];
-                        echo $id;
-                        $select = "SELECT * FROM records WHERE id='$id'";
-                        $result = $conn->query($select);
-                        $row = $result->fetch_assoc();
-                    }
-                    ?>
                     <div class="modal-body">
-                        <?php echo $row['id'];?>
                         <div class="col-auto mb-4">
                             <select id="dropdown" name="type" class="form-select">
                                 <option value="Income">Income</option>
                                 <option value="Expense">Expense</option>
                             </select>
                         </div>
-                        <input class="form-control" name="amount" id="record-amount" type="text" value="<?php echo $row['amount'] ?>" placeholder="Amount" aria-label="default input example"><br>
-                        <textarea class="form-control" name="desc" id="record-desc" placeholder="Description" rows="3"><?php echo $row['desc']?></textarea>
+                        <input class="form-control" name="amount" id="update-amount" type="text" placeholder="Amount" aria-label="default input example"><br>
+                        <textarea class="form-control" name="desc" id="update-desc" placeholder="Description" rows="3"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="update-btn" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="update-btn" id="update-btn" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
