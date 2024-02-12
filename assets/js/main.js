@@ -5,11 +5,6 @@ $(document).ready(function(){
         }
     });
 
-    $('.update-btn').click(function() {
-        // Submit the form with the ID 'update-form'
-        $('#update-form').submit();
-    });
-    
     $('.delete-btn').on("click", function(e){
         value = confirm("Are you sure?");
         if(value <= 0){
@@ -37,4 +32,27 @@ $(document).ready(function(){
         desc = DOMPurify.sanitize(desc);
         return true;
     }
+
+    $('#update-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+
+        // AJAX call to fetch data from the server
+        $.ajax({
+            url: 'update.php', // Path to your server-side script to fetch record
+            method: 'POST',
+            data: {id: id},
+            dataType: 'json',
+            success: function(response) {
+                // Populate modal fields with fetched data
+                $('#update-id').val(id);
+                $('#dropdown').val(response.type);
+                $('#update-amount').val(response.amount);
+                $('#update-desc').val(response.description);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching record:', error);
+            }
+        });
+    });
 });
