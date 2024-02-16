@@ -46,7 +46,7 @@ $(document).ready(function(){
             success: function(response) {
                 // Populate modal fields with fetched data
                 $('#update-id').val(id);
-                $('#dropdown').val(response.type);
+                $('#dropdown-type').val(response.type);
                 $('#update-amount').val(response.amount);
                 $('#update-desc').val(response.description);
             },
