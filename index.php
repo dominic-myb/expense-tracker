@@ -146,7 +146,7 @@ include("app/includes/html/html.head.php");
                 <form method="post" id="update-form">
                     <div class="modal-body">
                         <div class="col-auto mb-4">
-                            <select id="dropdown" name="type" class="form-select">
+                            <select id="dropdown-type" name="type" class="form-select">
                                 <option value="Income">Income</option>
                                 <option value="Expense">Expense</option>
                             </select>
